@@ -22,11 +22,14 @@ import com.adi.feedback.adapter.OptionsAdapter;
 import com.adi.feedback.global.DbHelper;
 import com.adi.feedback.global.GlobalFunctions;
 import com.adi.feedback.global.SharedPrefsGetSet;
+import com.adi.feedback.model.AddFeedbackResponse.AddFeedbackResponse;
 import com.adi.feedback.model.GetQuestionResponse.GetQuestionResponse;
 import com.adi.feedback.model.GetQuestionResponse.Question;
 import com.adi.feedback.model.OptionsData;
 import com.adi.feedback.model.QuestionData;
+import com.adi.feedback.model.UserResponce.UserLogin;
 import com.adi.feedback.retrofit.APIClient;
+import com.adi.feedback.util.SessionManager;
 
 
 import org.json.JSONObject;
@@ -55,8 +58,10 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     String jsons="application/json";
 
     RecyclerView rvOptions;
-
+    SessionManager sessionManager;
+    UserLogin user;
     TextView tvSubmit;
+    boolean status = false;
 
     String question, option;
     int userId;
@@ -73,7 +78,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
-
+        sessionManager = new SessionManager(this);
+        user= sessionManager.getUserDetails("UserLogin");
         mContext = this;
         db = new DbHelper(mContext);
         dialog = new ProgressDialog(mContext);
@@ -199,24 +205,71 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 if(validateOptions()) {
                     isSubmitted = true;
                     db.addUserResponse(SharedPrefsGetSet.getUserId(mContext), tvQuestion.getText().toString(), SharedPrefsGetSet.getAnswer(mContext));
-                    GlobalFunctions.toastShort(mContext, "Response submitted");
-                    SharedPrefsGetSet.removeAnswer(mContext);
-                    if((position+1) < totalQuestions) {
-                        isSubmitted = false;
-                        position = position + 1;
-                        setupQuestion(position);
-                    } else {
-                        SharedPrefsGetSet.removeUserId(mContext);
-                        //Go to thank you page
-                        Intent i = new Intent(mContext, ThankyouActivity.class);
-                        startActivity(i);
-                        finish();
+
+                    if(sendResponseToServer()){
+                        GlobalFunctions.toastShort(mContext, "Response submitted");
+                        SharedPrefsGetSet.removeAnswer(mContext);
+                        if((position+1) < totalQuestions) {
+                            isSubmitted = false;
+                            position = position + 1;
+                            setupQuestion(position);
+                        } else {
+                            SharedPrefsGetSet.removeUserId(mContext);
+                            //Go to thank you page
+                            Intent i = new Intent(mContext, ThankyouActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    }else{
+                        GlobalFunctions.toastShort(mContext, "Error occured");
                     }
+
                 } else {
                     GlobalFunctions.toastShort(mContext, "Select your choice");
                 }
                 break;
 
         }
+    }
+
+    private Boolean sendResponseToServer() {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("phone",SharedPrefsGetSet.getPhone(this));
+            jsonObject.put("email",SharedPrefsGetSet.getPhone(this));
+            jsonObject.put("name",SharedPrefsGetSet.getPhone(this));
+            jsonObject.put("uid",user.getId());
+            jsonObject.put("address",SharedPrefsGetSet.getPhone(this));
+            jsonObject.put("question",tvQuestion.getText().toString());
+            jsonObject.put("answer",SharedPrefsGetSet.getAnswer(mContext));
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        RequestBody bodyRequest = RequestBody.create(MediaType.parse(jsons),jsonObject.toString());
+        Call<AddFeedbackResponse> call = APIClient.getInterface().addFeedback(bodyRequest);
+        call.enqueue(new Callback<AddFeedbackResponse>() {
+            @Override
+            public void onResponse(Call<AddFeedbackResponse> call, Response<AddFeedbackResponse> response) {
+                if (response.isSuccessful())
+                {
+                    AddFeedbackResponse addFeedbackResponse = response.body();
+                    if (addFeedbackResponse.getResult()){
+                        status = true;
+                    }
+                    else{
+                        status = false;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddFeedbackResponse> call, Throwable t) {
+                status = false;
+            }
+        });
+        return status;
     }
 }

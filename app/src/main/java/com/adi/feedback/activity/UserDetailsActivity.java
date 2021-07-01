@@ -119,6 +119,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
                     GlobalFunctions.startProgressDialog(dialog, "Please wait");
                     int userId = db.addUser(email, name, phone, address);
                     SharedPrefsGetSet.setUserId(mContext, userId);
+                    SharedPrefsGetSet.setUserDetails(mContext, name,email,phone,address);
                     GlobalFunctions.stopProgressDialog(dialog);
 
                     startQuestionActivity();

@@ -26,9 +26,31 @@ public class SharedPrefsGetSet {
         GlobalFunctions.setSharedPrefs(mContext, KEY_ANSWER, option);
     }
 
+    public static void setUserDetails(Context mContext, String name,String email,String phone,String address){
+        GlobalFunctions.setSharedPrefs(mContext, "name", name);
+        GlobalFunctions.setSharedPrefs(mContext, "email", email);
+        GlobalFunctions.setSharedPrefs(mContext, "phone", phone);
+        GlobalFunctions.setSharedPrefs(mContext, "address", address);
+    }
+
+    public static String getName(Context mContext) {
+        return GlobalFunctions.getSharedPrefs(mContext, "name", "");
+    }
+    public static String getEmail(Context mContext) {
+        return GlobalFunctions.getSharedPrefs(mContext, "email", "");
+    }
+    public static String getPhone(Context mContext) {
+        return GlobalFunctions.getSharedPrefs(mContext, "phone", "");
+    }
+    public static String getAddress(Context mContext) {
+        return GlobalFunctions.getSharedPrefs(mContext, "address", "");
+    }
     public static String getAnswer(Context mContext) {
         return GlobalFunctions.getSharedPrefs(mContext, KEY_ANSWER, "");
     }
+
+
+
 
     public static void removeAnswer(Context mContext) {
         GlobalFunctions.removeSharedPrefs(mContext, KEY_ANSWER);

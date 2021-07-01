@@ -8,6 +8,7 @@ package com.adi.feedback.retrofit;
 //import com.adi.veeraleaders.model.TrasactionResponse;
 //import com.adi.veeraleaders.model.UserResponce;
 //import com.adi.veeraleaders.model.coupon.CouponResponse;
+import com.adi.feedback.model.AddFeedbackResponse.AddFeedbackResponse;
 import com.adi.feedback.model.AddressResponse.AdressResponse;
 import com.adi.feedback.model.GetQuestionResponse.GetQuestionResponse;
 import com.adi.feedback.model.UserResponce.UserResponse;
@@ -39,8 +40,8 @@ public interface UserService {
     @POST("login_user.php")
     Call<UserResponse> login(@Body RequestBody requestBody);
 //
-//    @POST("checkReferal.php")
-//    Call<CouponResponse> checkCoupon(@Body RequestBody requestBody);
+    @POST("addfeedback.php")
+    Call<AddFeedbackResponse> addFeedback(@Body RequestBody requestBody);
 //
 //    @POST("drawenroll.php")
 //    Call<JsonObject> getEnroll(@Body RequestBody requestBody);
