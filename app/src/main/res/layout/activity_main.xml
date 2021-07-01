@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="-1dp"
+        android:animateLayoutChanges="true"
+        android:background="@android:color/white">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/global_toolbar_layout" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/appBarLayout"
+            android:padding="25dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/name"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/purple_200"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:text="Wecome Seraj !"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/addrs"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_height="wrap_content"
+                    android:text="Address !"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/menu"
+                android:layout_width="match_parent"
+                android:layout_marginTop="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="MENU"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/purple_500"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/menu"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/montserrat"
+                android:background="@drawable/bg_border_primary"
+                android:gravity="center"
+                android:padding="18dp"
+                android:text="FEEDBACK"
+                android:textColor="@color/purple_500"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvExportFeedback"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvFeedback"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_border_primary"
+                android:gravity="center"
+                android:padding="18dp"
+                android:text="EXPORT TO EXCEL"
+                android:textColor="@color/purple_500"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAddQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvExportFeedback"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_border_primary"
+                android:gravity="center"
+                android:visibility="gone"
+                android:padding="18dp"
+                android:text="ADD QUESTION"
+                android:textColor="@color/purple_500"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAddQuestion"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                android:background="@drawable/bg_border_primary"
+                android:gravity="center"
+                android:padding="18dp"
+                android:text="CLEAR FEEDBACK"
+                android:textColor="@color/purple_500"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvClear"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_border_primary"
+                android:gravity="center"
+                android:padding="18dp"
+                android:fontFamily="@font/montserrat"
+                android:text="LOGOUT"
+                android:textColor="@color/purple_500"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
